@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "ol-mapbox-style": "^2.4.0",
+    "ol-mapbox-style": "^2.5.1",
     "openlayers": "^4.2.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
