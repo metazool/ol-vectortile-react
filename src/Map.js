@@ -1,9 +1,17 @@
 import React from "react";
-import * as ol from 'openlayers';
+import Map from 'ol/map';
+import View from 'ol/view';
+import TileLayer from 'ol/layer/vectortile';
+import TileSource from 'ol/source/vectortile';
+import tilegrid from 'ol/tilegrid';
+//import * as proj from 'ol/proj';
+import proj from 'ol/proj';
 import { applyStyle } from 'ol-mapbox-style';
-require('openlayers/css/ol.css');
 
-export default class Map extends React.Component {
+import MVT from 'ol/format/mvt';
+require('ol/ol.css');
+
+export default class OLMap extends React.Component {
 
   componentDidMount(props) {
     const map = this.olMap();
@@ -11,14 +19,14 @@ export default class Map extends React.Component {
   }
 
   vectorTileLayer() {
-    const tilegrid = ol.tilegrid.createXYZ({tileSize: 512, maxZoom: 22});
-    return new ol.layer.VectorTile({
-      source: new ol.source.VectorTile({
+    const tileGrid = tilegrid.createXYZ({tileSize: 512, maxZoom: 22});
+    return new TileLayer({
+      source: new TileSource({
         attributions: '© <a href="https://openmaptiles.org/">OpenMapTiles</a> ' +
           '© <a href="http://www.openstreetmap.org/copyright">' +
           'OpenStreetMap contributors</a>',
-        format: new ol.format.MVT(),
-        tileGrid: tilegrid,
+        format: new MVT(),
+        tileGrid,
         tilePixelRatio: 8,
         url: 'https://free-0.tilehosting.com/data/v3/{z}/{x}/{y}.pbf?key=tXiQqN3lIgskyDErJCeY'
       })
@@ -27,13 +35,13 @@ export default class Map extends React.Component {
 
   olMap() {
     const center_wgs84 = [8.5389, 47.3870];
-    const view = new ol.View({
-      center: ol.proj.fromLonLat(center_wgs84),
+    const view = new View({
+      center: proj.fromLonLat(center_wgs84),
       resolution: 2445,
       maxResolution: 156543,
     });
 
-    return new ol.Map({
+    return new Map({
       target: 'map',
       view: view
     });
@@ -53,12 +61,13 @@ export default class Map extends React.Component {
     });
   }
 
-  addRasterLayer(map) {
+  /* addRasterLayer(map) {
     const layer = new ol.layer.Tile({
       source: new ol.source.OSM()
     });
     map.addLayer(layer);
   }
+  */
 
   render() {
     return <div id="map" className="Map"/>;

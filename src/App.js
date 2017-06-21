@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Map from './Map';
+import OLMap from './Map';
 import './App.css';
 
 class App extends Component {
@@ -9,7 +9,7 @@ class App extends Component {
         <div className="App-header">
           <h2>OpenLayers / React / Vector Tiles</h2>
         </div>
-        <Map/>
+        <OLMap/>
       </div>
     );
   }
